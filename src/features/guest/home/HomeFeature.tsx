@@ -1,9 +1,12 @@
 // Component
+import BoardTableFeature from "./components/BoardTableFeature";
 
 const HomeFeature: React.FC = () => {
   return (
     <>
-      <h1 className="text-blue-500 text-2xl">Hello world</h1>
+      <div className="flex items-center justify-center md:h-screen">
+        <BoardTableFeature />
+      </div>
     </>
   );
 };

@@ -10,11 +10,7 @@ const GuestLayout: React.FC = () => {
 
   return (
     <>
-      <AppShell
-        footer={{ height: 60 }}
-        navbar={undefined}
-        padding={isMobile ? "" : ""}
-      >
+      <AppShell navbar={undefined} padding={isMobile ? "" : ""}>
         {/* Main */}
         <AppShell.Main>
           <Container size="xl">
