@@ -7,7 +7,8 @@ import { store } from "./redux/store";
 
 // Mantine
 import { Notifications } from "@mantine/notifications";
-import { MantineProvider } from "@mantine/core";
+import { createTheme, MantineProvider } from "@mantine/core";
+import "@mantine/core/styles.css";
 
 // Component
 import App from "./App";
@@ -21,12 +22,18 @@ import { QueryClient, QueryClientProvider } from "@tanstack/react-query";
 // React tanstack
 const queryClient = new QueryClient();
 
+// Mantine | Theme
+export const theme = createTheme({
+  fontFamily: "Jost, sans-serif",
+  headings: { fontFamily: "Jost, sans-serif" },
+});
+
 const rootElement = document.getElementById("root") as HTMLElement;
 if (rootElement) {
   createRoot(rootElement).render(
     <QueryClientProvider client={queryClient}>
       <Provider store={store}>
-        <MantineProvider>
+        <MantineProvider theme={theme}>
           <Notifications position="top-left" zIndex={1000} />
           <App />
         </MantineProvider>

@@ -17,7 +17,7 @@ const GuestLayout: React.FC = () => {
       >
         {/* Main */}
         <AppShell.Main>
-          <Container size="xl">
+          <Container size="xl"  h="100%">
             <Outlet />
           </Container>
         </AppShell.Main>
