@@ -1,21 +1,18 @@
-// Component
-import BoardColumnComponent from "../../../../component/board/BoardColumnComponent";
-
 // Redux hooks
 import { useAppSelector } from "../../../../redux/hooks";
 
 // Redux | States and actions
-import { selectTodoDragAndDrop } from "../../../../redux/features/board/todoBoardDragAndDropSlice";
+import {
+  // Selector
+  selectTodoDragAndDrop,
+} from "../../../../redux/features/board/todoBoardDragAndDropSlice";
 
-// Custom Hook
-import { useDragAndDrop } from "../../../../hooks/board/useDragAndDrop";
+// Component
+import BoardColumnComponent from "./BoardColumnFeature";
 
 const BoardTable: React.FC = () => {
   // Redux | state destructor
   const { boardColumns, boardTasks } = useAppSelector(selectTodoDragAndDrop);
-
-  // Custom Hook | destructor
-  const { allowDrop, onDragStart, onDrop } = useDragAndDrop();
 
   return (
     <div>
@@ -25,9 +22,6 @@ const BoardTable: React.FC = () => {
             key={column.id}
             boardColumnProps={column}
             boardTaskProps={boardTasks}
-            allowDrop={allowDrop}
-            onDragStart={onDragStart}
-            onDrop={onDrop}
           />
         ))}
       </div>

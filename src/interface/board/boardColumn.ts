@@ -9,7 +9,4 @@ export type BoardColumn = {
 export type BoardColumnProps = {
   boardColumnProps: BoardColumn;
   boardTaskProps: BoardTask[];
-  allowDrop: (e: React.DragEvent<HTMLDivElement>) => void;
-  onDragStart: (e: React.DragEvent<HTMLDivElement>, taskId: number) => void;
-  onDrop: (e: React.DragEvent<HTMLDivElement>, status: string) => void;
 };

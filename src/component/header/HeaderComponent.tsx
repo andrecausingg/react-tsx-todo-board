@@ -39,6 +39,7 @@ const HeaderComponent: React.FC<HeaderProps> = ({ title, actions }) => {
             networkConfig={action.networkConfig}
             modalConfig={{
               title: action.modalConfig.title,
+              description: action.modalConfig.description,
               opened: isOpen,
               onClose: () => setActiveModalIndex(null),
             }}

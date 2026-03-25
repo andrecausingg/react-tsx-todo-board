@@ -2,6 +2,7 @@ import type { NetworkConfig, FieldConfig } from "../form/form";
 
 export type ModalConfig = {
   title: string;
+  description?: string;
 };
 
 export type ActionButton = {

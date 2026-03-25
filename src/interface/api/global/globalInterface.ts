@@ -3,7 +3,7 @@ export interface MutatePayloadInterface {
   payload: any;
   api: string;
   method: string;
-  is_fetch_enable: boolean;
+  isFetchEnable?: boolean;
 }
 // End MutatePayload
 

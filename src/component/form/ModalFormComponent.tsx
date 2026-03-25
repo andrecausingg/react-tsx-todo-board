@@ -17,7 +17,7 @@ import { notifications } from "@mantine/notifications";
 // Interface
 import type { FormDataProps, FieldConfig } from "../../interface/form/form";
 
-// Content
+// Context
 import { useAuth } from "../../context/authentication/AuthContext";
 
 const ModalFormComponent: React.FC<FormDataProps> = ({
@@ -25,8 +25,8 @@ const ModalFormComponent: React.FC<FormDataProps> = ({
   networkConfig,
   modalConfig,
 }) => {
-  const { api, method, mutation } = networkConfig;
-  const { opened, onClose, title } = modalConfig;
+  const { api, method, mutation, isFetchEnable } = networkConfig;
+  const { opened, onClose, title, description } = modalConfig;
 
   // Context
   const { setAuthenticated } = useAuth();
@@ -78,6 +78,7 @@ const ModalFormComponent: React.FC<FormDataProps> = ({
         payload,
         api,
         method,
+        isFetchEnable,
       },
       {
         onSuccess: (data: any) => {
@@ -173,11 +174,17 @@ const ModalFormComponent: React.FC<FormDataProps> = ({
       closeOnClickOutside={false}
     >
       <form onSubmit={form.onSubmit(handleSubmit)}>
-        {formConfig.map(renderField)}
+        {!description ? (
+          formConfig.map(renderField)
+        ) : (
+          <p className="text-center">{description}</p>
+        )}
 
-        <Button type="submit" fullWidth mt="md" loading={mutation?.isPending}>
-          Submit
-        </Button>
+        <div className="text-center">
+          <Button type="submit" mt="md" loading={mutation?.isPending}>
+            Submit
+          </Button>
+        </div>
       </form>
     </Modal>
   );
