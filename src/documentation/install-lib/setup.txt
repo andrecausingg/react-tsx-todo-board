@@ -4,4 +4,4 @@ npm install react-redux
 npm install @reduxjs/toolkit react-redux
 npm install tailwindcss @tailwindcss/vite
 npm install react-router-dom
-npm install @mantine/core @mantine/form @mantine/notifications @mantine/modals
+npm install @mantine/core @mantine/form @mantine/notifications @mantine/modals @mantine/hooks @mantine/dates dayjs

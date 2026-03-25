@@ -5,10 +5,14 @@ import { createRoot } from "react-dom/client";
 import { Provider } from "react-redux";
 import { store } from "./redux/store";
 
-// Mantine
+// Mantine Library
 import { Notifications } from "@mantine/notifications";
 import { createTheme, MantineProvider } from "@mantine/core";
+
+// Mantine Css
 import "@mantine/core/styles.css";
+import "@mantine/dates/styles.css";
+import "@mantine/notifications/styles.css";
 
 // Component
 import App from "./App";
@@ -28,14 +32,19 @@ export const theme = createTheme({
   headings: { fontFamily: "Jost, sans-serif" },
 });
 
+// Context
+import { AuthProvider } from "./context/authentication/AuthContext";
+
 const rootElement = document.getElementById("root") as HTMLElement;
 if (rootElement) {
   createRoot(rootElement).render(
     <QueryClientProvider client={queryClient}>
       <Provider store={store}>
         <MantineProvider theme={theme}>
-          <Notifications position="top-left" zIndex={1000} />
-          <App />
+          <Notifications position="bottom-right" zIndex={1000} />
+          <AuthProvider>
+            <App />
+          </AuthProvider>
         </MantineProvider>
       </Provider>
     </QueryClientProvider>,
