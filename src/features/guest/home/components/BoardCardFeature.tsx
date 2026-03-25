@@ -1,5 +1,5 @@
 // Mantine
-import { Divider } from "@mantine/core";
+import { Badge, Divider } from "@mantine/core";
 
 // Interface
 import type { BoardCardProps } from "../../../../interface/board/boardCard";
@@ -9,6 +9,9 @@ import { useDragAndDrop } from "../../../../hooks/board/useDragAndDrop";
 
 // Tabler
 import { IconTrashFilled } from "@tabler/icons-react";
+
+// Date handling
+import dayjs from "dayjs";
 
 export const BoardCardFeature: React.FC<BoardCardProps> = ({ task }) => {
   // Custom Hook | destructor
@@ -29,6 +32,19 @@ export const BoardCardFeature: React.FC<BoardCardProps> = ({ task }) => {
       done: "text-green-400",
     }[task.status] || "text-gray-300";
 
+  // Badge logic
+  let badgeText = "";
+  let badgeColor: "red" | "yellow" | "gray" = "gray";
+  if (task.expired_at) {
+    if (dayjs(task.expired_at).isBefore(dayjs(), "day")) {
+      badgeText = "Expired";
+      badgeColor = "gray";
+    } else if (dayjs(task.expired_at).isSame(dayjs().add(1, "day"), "day")) {
+      badgeText = "Expiring Tomorrow";
+      badgeColor = "red";
+    }
+  }
+
   return (
     <div
       draggable
@@ -37,7 +53,15 @@ export const BoardCardFeature: React.FC<BoardCardProps> = ({ task }) => {
       }
       className={`bg-gray-100 p-3 rounded-xl shadow mb-2 cursor-grab border-l-4 m-x-2 ${statusBorderColor}`}
     >
-      <h3 className="font-bold text-md text-2xl">{task.title}</h3>
+      <div className="flex items-center justify-between">
+        <h3 className="font-bold text-md text-2xl">{task.title}</h3>
+        {badgeText && (
+          <Badge color={badgeColor} variant="filled">
+            {badgeText}
+          </Badge>
+        )}
+      </div>
+
       <p className="text-sm text-gray-600">{task.description}</p>
       <p className="text-xs text-gray-400">Exp: {task.expired_at}</p>
 
