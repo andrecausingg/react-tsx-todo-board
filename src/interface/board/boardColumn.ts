@@ -1,5 +1,3 @@
-import type { BoardTask } from "../board/boardTask";
-
 export type BoardColumn = {
   id: number;
   title: string;
@@ -8,5 +6,4 @@ export type BoardColumn = {
 
 export type BoardColumnProps = {
   boardColumnProps: BoardColumn;
-  boardTaskProps: BoardTask[];
 };

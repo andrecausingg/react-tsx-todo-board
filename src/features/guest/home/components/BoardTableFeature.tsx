@@ -12,17 +12,13 @@ import BoardColumnComponent from "./BoardColumnFeature";
 
 const BoardTable: React.FC = () => {
   // Redux | state destructor
-  const { boardColumns, boardTasks } = useAppSelector(selectTodoDragAndDrop);
+  const { boardColumns } = useAppSelector(selectTodoDragAndDrop);
 
   return (
     <div>
       <div className="grid md:grid-cols-3 gap-4">
         {boardColumns.map((column) => (
-          <BoardColumnComponent
-            key={column.id}
-            boardColumnProps={column}
-            boardTaskProps={boardTasks}
-          />
+          <BoardColumnComponent key={column.id} boardColumnProps={column} />
         ))}
       </div>
     </div>

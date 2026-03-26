@@ -10,15 +10,29 @@ import { ScrollArea } from "@mantine/core";
 // Hooks
 import { useDragAndDrop } from "../../../../hooks/board/useDragAndDrop";
 
+// Tabler
+import { IconPencilPlus } from "@tabler/icons-react";
+
+// Redux | States and actions
+import {
+  // Selector
+  selectTodoDragAndDrop,
+} from "../../../../redux/features/board/todoBoardDragAndDropSlice";
+
+// Redux hooks
+import { useAppSelector } from "../../../../redux/hooks";
+
 export const BoardColumnFeature: React.FC<BoardColumnProps> = ({
   boardColumnProps,
-  boardTaskProps,
 }) => {
   // Custom Hook | destructor
   const { allowDrop, onDrop } = useDragAndDrop();
 
   // Board column props | Destructor
   const { title, status } = boardColumnProps;
+
+  // Redux | state destructor
+  const { boardTasks } = useAppSelector(selectTodoDragAndDrop);
 
   // Map status to Tailwind text color
   const statusTextColor =
@@ -39,7 +53,7 @@ export const BoardColumnFeature: React.FC<BoardColumnProps> = ({
       </h2>
       <ScrollArea h={400}>
         <div>
-          {boardTaskProps
+          {boardTasks
             .filter((task) => task.status === status)
             .map((task) => (
               <BoardCardComponent key={task.id} task={task} />
