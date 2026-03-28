@@ -151,6 +151,22 @@ const HomeFeature: React.FC = () => {
         title: "Create",
       },
     },
+    {
+      label: "Logout",
+      color: "bg-red-500 hover:bg-red-600",
+      fieldConfig: [],
+      networkConfig: {
+        api: "/v1/settings/logout",
+        method: "GET",
+        mutation: useAuthApiMutation,
+        useFetch:undefined,
+        isFetchEnable: true,
+      },
+      modalConfig: {
+        title: "Logout",
+        description: "Are you sure you want to logout?"
+      },
+    },
   ];
 
   // Fetch todo

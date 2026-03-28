@@ -29,7 +29,7 @@ const ModalFormComponent: React.FC<FormDataProps> = ({
   const { opened, onClose, title, description } = modalConfig;
 
   // Context
-  const { setAuthenticated } = useAuth();
+  const { setAuthenticated, setGuest } = useAuth();
 
   // Reset form and mutation open modal again
   useEffect(() => {
@@ -94,6 +94,13 @@ const ModalFormComponent: React.FC<FormDataProps> = ({
 
           form.reset();
           onClose();
+
+          if (data?.message === "Successfully logged out.") {
+            setGuest();
+            setTimeout(() => {
+              window.location.href = "/";
+            }, 1000); 
+          }
         },
 
         onError: (error: any) => {
