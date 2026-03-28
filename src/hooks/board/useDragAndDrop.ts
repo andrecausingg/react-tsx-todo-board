@@ -11,7 +11,20 @@ import {
 import { useApi } from "../../api/todo/todoApi";
 
 // Type for return of the hook
+type TaskDetails = {
+  id: number;
+  uuid_todo_id: string;
+  title: string;
+  description: string;
+  status: string;
+  expired_at: string | undefined | null | Date;
+};
+
 interface DragAndDropHandlers {
+  updateTodo: (
+    taskDetails: Partial<TaskDetails> & { uuid_todo_id: string },
+  ) => void;
+  deleteTodo: (taskId: number, taskUuid: string) => void;
   allowDrop: (e: React.DragEvent<HTMLDivElement>) => void;
   onDragStart: (
     e: React.DragEvent<HTMLDivElement>,
@@ -20,7 +33,6 @@ interface DragAndDropHandlers {
     taskStatus: string,
   ) => void;
   onDrop: (e: React.DragEvent<HTMLDivElement>, status: string) => void;
-  deleteTodo: (taskId: number, taskUuid: string) => void;
 }
 
 export const useDragAndDrop = (): DragAndDropHandlers => {
@@ -29,6 +41,29 @@ export const useDragAndDrop = (): DragAndDropHandlers => {
 
   // Api hooks | Todo
   const useTodoApiMutation = useApi();
+
+  const updateTodo = (
+    taskDetails: Partial<TaskDetails> & { uuid_todo_id: string },
+  ) => {
+    dispatch(updateTaskStatus({ taskDetails }));
+
+    const payload = Object.fromEntries(
+      Object.entries(taskDetails).filter(
+        ([key, value]) => key !== "uuid_todo_id" && value !== undefined,
+      ),
+    );
+
+    const api = `/v1/todo/${taskDetails.uuid_todo_id}`;
+    const method = "PUT";
+    const isFetchEnable = false;
+
+    useTodoApiMutation.mutate({
+      payload,
+      api,
+      method,
+      isFetchEnable,
+    });
+  };
 
   const allowDrop = (e: React.DragEvent<HTMLDivElement>) => {
     e.preventDefault();
@@ -87,5 +122,5 @@ export const useDragAndDrop = (): DragAndDropHandlers => {
     });
   };
 
-  return { allowDrop, onDragStart, onDrop, deleteTodo };
+  return { allowDrop, onDragStart, onDrop, deleteTodo, updateTodo };
 };
