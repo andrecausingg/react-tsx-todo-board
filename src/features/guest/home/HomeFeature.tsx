@@ -121,7 +121,7 @@ const HomeFeature: React.FC = () => {
           label: "Status",
           api_key: "status",
           tag: "Select",
-          required: false,
+          required: true,
           option: ["todo", "in_progress", "done"],
         },
         {
