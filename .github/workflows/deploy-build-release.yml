@@ -1,0 +1,107 @@
+name: Build and Deploy (Demo & Production)
+
+on:
+  push:
+    branches:
+      - server/development
+      - server/release
+
+jobs:
+  deploy:
+    runs-on: ubuntu-latest
+    permissions:
+      contents: write
+
+    steps:
+      # 1️⃣ Setup Node.js
+      - name: Setup Node.js
+        uses: actions/setup-node@v3
+        with:
+          node-version: "22.x"
+
+      # 2️⃣ Checkout branch
+      - name: Checkout current branch
+        uses: actions/checkout@v3
+        with:
+          fetch-depth: 0
+
+      # 3️⃣ Clean node_modules & lockfiles
+      - name: Clean dependencies
+        run: |
+          rm -rf node_modules package-lock.json
+
+      # 4️⃣ Install dependencies
+      - name: Install dependencies
+        run: npm install --force
+
+      # 5️⃣ Create .env file from GitHub secrets
+      - name: Create environment file
+        run: |
+          if [ "${{ github.ref_name }}" = "server/development" ]; then
+            echo "VITE_BACKEND_URL=${{ secrets.DEV_VITE_BACKEND_URL }}" > .env
+            echo "VITE_FRONTEND_URL=${{ secrets.DEV_VITE_FRONTEND_URL }}" >> .env
+            echo "✅ Using server/development environment"
+          elif [ "${{ github.ref_name }}" = "server/release" ]; then
+            echo "VITE_BACKEND_URL=${{ secrets.PROD_VITE_BACKEND_URL }}" > .env
+            echo "VITE_FRONTEND_URL=${{ secrets.PROD_VITE_FRONTEND_URL }}" >> .env
+            echo "🚀 Using PRODUCTION environment"
+          fi
+          cat .env
+
+      # 6️⃣ Build the project
+      - name: Build the project
+        run: |
+          cp .env .env.local   # ensure Vite reads it
+          if [ "${{ github.ref_name }}" = "server/development" ]; then
+            npm run build-demo
+          elif [ "${{ github.ref_name }}" = "server/release" ]; then
+            npm run build
+          fi
+
+      # 7️⃣ Move build output to temp
+      - name: Move build to temp
+        run: |
+          mkdir -p ../temp-dist
+          if [ "${{ github.ref_name }}" = "server/development" ]; then
+            cp -r build/demo/* ../temp-dist/
+          elif [ "${{ github.ref_name }}" = "server/release" ]; then
+            cp -r build/prod/* ../temp-dist/
+          fi
+
+      # 8️⃣ Checkout target branch
+      - name: Checkout target branch
+        uses: actions/checkout@v3
+        with:
+          ref: ${{ github.ref_name == 'server/development' && 'build/demo' || 'build/prod' }}
+          fetch-depth: 0
+
+      # 9️⃣ Clean old build files (keep Docker configs)
+      - name: Clean old build files
+        run: |
+          find . -mindepth 1 -maxdepth 1 \
+            ! -name 'docker-compose.yml' \
+            ! -name 'Dockerfile' \
+            ! -name 'nginx.conf' \
+            ! -name '.git' \
+            ! -name '.gitignore' \
+            -exec rm -rf {} +
+          echo "🧹 Cleaned old files (kept Docker configs)"
+
+      # 🔟 Copy new build files
+      - name: Copy new build files
+        run: cp -r ../temp-dist/* .
+
+      # 11️⃣ Commit and push
+      - name: Commit & push
+        env:
+          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+        run: |
+          git config user.name "GitHub Actions"
+          git config user.email "actions@github.com"
+          git add .
+          git commit -m "🚀 Deploy from ${{ github.ref_name }} branch" || echo "No changes to commit"
+          if [ "${{ github.ref_name }}" = "server/development" ]; then
+            git push origin build/demo
+          elif [ "${{ github.ref_name }}" = "server/release" ]; then
+            git push origin build/prod
+          fi
