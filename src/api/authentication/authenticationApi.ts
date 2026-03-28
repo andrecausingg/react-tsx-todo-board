@@ -32,6 +32,11 @@ export const useAuthenticationApi = () => {
             api,
             payload,
           );
+        } else if (method === "GET") {
+          response = await axiosInstance.get<ApiSuccessInterface>(
+            api,
+            payload,
+          );
         } else {
           throw { message: "METHOD NOT FOUND CALL API" } as ApiErrorInterface;
         }
