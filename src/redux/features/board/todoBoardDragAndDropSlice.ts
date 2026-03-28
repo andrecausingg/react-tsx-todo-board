@@ -30,10 +30,10 @@ export const todoDragAndDropSlice = createSlice({
     },
     // Update Task Status
     updateTaskStatus: (state, action) => {
-      const { taskId, status } = action.payload;
+      const { taskDetails } = action.payload;
 
       state.boardTasks = state.boardTasks.map((task) =>
-        task.id === taskId ? { ...task, status } : task,
+        task.id === taskDetails.id ? { ...task, ...taskDetails } : task,
       );
     },
     // Delete Task by ID

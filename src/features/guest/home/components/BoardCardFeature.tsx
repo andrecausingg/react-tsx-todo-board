@@ -62,6 +62,7 @@ export const BoardCardFeature: React.FC<BoardCardProps> = ({ task }) => {
 
   const handleSave = () => {
     updateTodo({
+      id: task.id,
       uuid_todo_id: task.uuid_todo_id,
       title: form.title,
       description: form.description,
