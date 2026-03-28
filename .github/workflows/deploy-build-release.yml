@@ -66,7 +66,7 @@ jobs:
             cp -r build/demo/* ../temp-dist/
           elif [ "${{ github.ref_name }}" = "server/release" ]; then
             cp -r build/prod/* ../temp-dist/
-          fi
+          fi 
 
       # 8️⃣ Checkout target branch
       - name: Checkout target branch
