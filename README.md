@@ -29,3 +29,6 @@ VITE_AUTHENTICATED=authenticated
 ### Start up Docker containers
 
 docker-compose up -d
+
+### Having trouble setting it up? You can check it on the live server.
+https://todo-board.andrecausing.com/
