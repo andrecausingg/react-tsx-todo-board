@@ -23,11 +23,7 @@ export const useApi = () => {
     ApiErrorInterface, // error type
     MutatePayloadInterface
   >({
-    mutationFn: async ({
-      payload,
-      api,
-      method,
-    }: MutatePayloadInterface) => {
+    mutationFn: async ({ payload, api, method }: MutatePayloadInterface) => {
       try {
         let response;
 
@@ -64,6 +60,7 @@ export const useApi = () => {
     },
 
     onSuccess: (data, variables) => {
+      console.log("data", data);
       if (variables?.isFetchEnable) {
         queryClient.invalidateQueries({ queryKey: ["fetchApi"], exact: false });
       }
