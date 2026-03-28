@@ -40,12 +40,10 @@ jobs:
           if [ "${{ github.ref_name }}" = "server/development" ]; then
             echo "VITE_BACKEND_URL=${{ secrets.DEV_VITE_BACKEND_URL }}" > .env
             echo "VITE_FRONTEND_URL=${{ secrets.DEV_VITE_FRONTEND_URL }}" >> .env
-            echo "VITE_QUERY_NOTE=${{ secrets.DEV_VITE_QUERY_NOTE }}" >> .env
             echo "✅ Using server/development environment"
           elif [ "${{ github.ref_name }}" = "server/release" ]; then
             echo "VITE_BACKEND_URL=${{ secrets.PROD_VITE_BACKEND_URL }}" > .env
             echo "VITE_FRONTEND_URL=${{ secrets.PROD_VITE_FRONTEND_URL }}" >> .env
-            echo "VITE_QUERY_NOTE=${{ secrets.PROD_VITE_QUERY_NOTE }}" >> .env
             echo "🚀 Using PRODUCTION environment"
           fi
           cat .env
