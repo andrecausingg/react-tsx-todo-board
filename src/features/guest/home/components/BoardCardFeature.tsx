@@ -121,7 +121,11 @@ export const BoardCardFeature: React.FC<BoardCardProps> = ({ task }) => {
           mt="sm"
         />
       ) : (
-        <h3 className="font-bold text-md text-2xl mt-3">{task.title}</h3>
+        <div className="w-full">
+          <h3 className="font-bold text-md text-2xl mt-3 truncate">
+            {task.title}
+          </h3>
+        </div>
       )}
 
       {isEditing ? (
@@ -133,7 +137,9 @@ export const BoardCardFeature: React.FC<BoardCardProps> = ({ task }) => {
           mt="xs"
         />
       ) : (
-        <p className="text-sm text-gray-600">{task.description}</p>
+        <div className="w-full">
+          <h3 className="text-sm text-gray-600 truncate">{task.description}</h3>
+        </div>
       )}
 
       {isEditing ? (
