@@ -10,9 +10,6 @@ import { ScrollArea } from "@mantine/core";
 // Hooks
 import { useDragAndDrop } from "../../../../hooks/board/useDragAndDrop";
 
-// Tabler
-import { IconPencilPlus } from "@tabler/icons-react";
-
 // Redux | States and actions
 import {
   // Selector
