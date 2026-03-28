@@ -3,6 +3,7 @@ import { useAppDispatch } from "../../redux/hooks";
 
 // Redux | States and actions
 import {
+  updateTask,
   updateTaskStatus,
   deleteTaskById,
 } from "../../redux/features/board/todoBoardDragAndDropSlice";
@@ -45,7 +46,7 @@ export const useDragAndDrop = (): DragAndDropHandlers => {
   const updateTodo = (
     taskDetails: Partial<TaskDetails> & { uuid_todo_id: string },
   ) => {
-    dispatch(updateTaskStatus({ taskDetails }));
+    dispatch(updateTask({ taskDetails }));
 
     const payload = Object.fromEntries(
       Object.entries(taskDetails).filter(

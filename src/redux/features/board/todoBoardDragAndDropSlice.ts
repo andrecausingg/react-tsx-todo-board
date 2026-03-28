@@ -29,11 +29,18 @@ export const todoDragAndDropSlice = createSlice({
       state.boardColumns = action.payload;
     },
     // Update Task Status
-    updateTaskStatus: (state, action) => {
+    updateTask: (state, action) => {
       const { taskDetails } = action.payload;
 
       state.boardTasks = state.boardTasks.map((task) =>
         task.id === taskDetails.id ? { ...task, ...taskDetails } : task,
+      );
+    },
+    updateTaskStatus: (state, action) => {
+      const { taskId, status } = action.payload;
+
+      state.boardTasks = state.boardTasks.map((task) =>
+        task.id === taskId ? { ...task, status } : task,
       );
     },
     // Delete Task by ID
@@ -49,6 +56,7 @@ export const todoDragAndDropSlice = createSlice({
 
 // Export actions
 export const {
+  updateTask,
   setBoardTasks,
   setBoardColumns,
   updateTaskStatus,
