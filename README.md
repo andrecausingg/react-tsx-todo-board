@@ -31,4 +31,7 @@ VITE_AUTHENTICATED=authenticated
 docker-compose up -d
 
 ### Having trouble setting it up? You can check it on the live server.
+
 https://todo-board.andrecausing.com/
+
+### To check the expiration indicator, set the date one day ahead of the current date.
