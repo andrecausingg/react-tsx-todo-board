@@ -1,26 +1,15 @@
-# Logs
-logs
-*.log
-npm-debug.log*
-yarn-debug.log*
-yarn-error.log*
-pnpm-debug.log*
-lerna-debug.log*
+# Ignore node_modules
+node_modules/
 
-node_modules
-dist
-dist-ssr
-*.local
+# Don't ignore other folders like dist
+!.gitignore
 
-# Editor directories and files
-.vscode/*
-!.vscode/extensions.json
-.idea
-.DS_Store
-*.suo
-*.ntvs*
-*.njsproj
-*.sln
-*.sw?
+# Vite specific files
+.vite/
 
+# Environment files
 .env
+.env.*
+!.env.example
+
+vite.svg

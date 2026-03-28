@@ -1,17 +1,11 @@
 services:
-  frontend:
-    build:
-      context: .
-      dockerfile: Dockerfile
-    container_name: board-todo-app
+  web:
+    image: nginx:alpine
+    container_name: 
     ports:
-      - "5173:5173"
+      - 
     volumes:
-      - .:/app
-      - /app/node_modules
-    networks:
-      - board-todo-app-net
-
-networks:
-  board-todo-app-net:
-    driver: bridge
+      # Mount the entire frontend directory
+      - ./:/usr/share/nginx/html:ro
+      # Mount custom Nginx config
+      - ./nginx.conf:/etc/nginx/conf.d/default.conf:ro

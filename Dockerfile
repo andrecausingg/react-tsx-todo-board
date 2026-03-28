@@ -1,17 +1,12 @@
-FROM node:22
+FROM nginx:alpine
 
-# Set working directory
-WORKDIR /app
+# Remove default static files
+RUN rm -rf /usr/share/nginx/html/*
 
-# Copy package files and install dependencies
-COPY package*.json ./
-RUN npm install
+# Copy built React app
+COPY . /usr/share/nginx/html
 
-# Copy the rest of the project files
-COPY . .
+# Copy custom Nginx config
+COPY nginx.conf /etc/nginx/conf.d/default.conf
 
-# Expose dev server port
-EXPOSE 5173
-
-# Start Vite dev server
-CMD ["npm", "run", "dev"]
+EXPOSE 80
