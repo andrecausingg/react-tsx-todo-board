@@ -168,8 +168,8 @@ const HomeFeature: React.FC = () => {
 
   return (
     <>
-      <div className="flex items-center justify-center md:h-screen">
-        <div className="p-6 w-full ">
+      <div className="flex items-center justify-center md:h-screen mt-8 md:mt-0">
+        <div className=" w-full ">
           <HeaderComponent
             title="Todo Board"
             actions={
